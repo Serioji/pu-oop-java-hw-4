@@ -149,7 +149,7 @@ public class GameBoard extends JFrame implements MouseListener {
                     this.repaint();
                     if (hasBoardWitch(row, col)) {
                         UI.render(this, "Победа", "Победа");
-                        System.exit(1);
+                        System.exit(2);
                     }
                     if(this.hasBoardBlue(row,col))  {
                         UI.render(this, "Грешка", "Невадлен ход");
