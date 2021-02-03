@@ -31,32 +31,13 @@ public class GameBoard extends JFrame implements MouseListener {
             this.gpsStart1[7][7] = new GPSstart(7,7,Color.GREEN);
 
         this.blueTile = new BlueTile[TILE_SIDE_COUNT][TILE_SIDE_COUNT];
-        for(int blueCount = 5; blueCount>0; blueCount--) {
-            randomNumber1 = ThreadLocalRandom.current().nextInt(0, 8);
-            randomNumber2 = ThreadLocalRandom.current().nextInt(0, 8);
-            if(this.gpsStart1[randomNumber1][randomNumber2] ==null&&this.blueTile[randomNumber1][randomNumber2]==null){
-                this.blueTile[randomNumber1][randomNumber2] = new BlueTile(randomNumber1,randomNumber2,Color.blue);
-                blueCount--;
-            }
-            blueCount++;
-
-        }
+        summonBlueTile(randomNumber1,randomNumber2);
         this.house= new WitchHouseGPS[TILE_SIDE_COUNT][TILE_SIDE_COUNT];
-        for(int pinkCount = 9; pinkCount>0;pinkCount--){
-            randomNumber1 = ThreadLocalRandom.current().nextInt(0, 8);
-            randomNumber2 = ThreadLocalRandom.current().nextInt(0, 8);
-            if(this.gpsStart1[randomNumber1][randomNumber2] ==null&&this.blueTile[randomNumber1][randomNumber2]==null&&this.house[randomNumber1][randomNumber2]==null){
-                this.house[randomNumber1][randomNumber2] = new WitchHouseGPS(randomNumber1,randomNumber2,Color.pink);
-                pinkCount--;
-            }
-            pinkCount++;
-        }
-
+        summonWitchHouse(randomNumber1,randomNumber2);
         this.setSize(800, 800);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.addMouseListener(this);
-
     }
 
     @Override
@@ -81,6 +62,29 @@ public class GameBoard extends JFrame implements MouseListener {
                 this.renderGamePice(g,row,col);
 
             }
+        }
+    }
+    private void summonBlueTile(int randomNumber1, int randomNumber2){
+        for(int blueCount = 5; blueCount>0; blueCount--) {
+            randomNumber1 = ThreadLocalRandom.current().nextInt(0, 8);
+            randomNumber2 = ThreadLocalRandom.current().nextInt(0, 8);
+            if(this.gpsStart1[randomNumber1][randomNumber2] ==null&&this.blueTile[randomNumber1][randomNumber2]==null){
+                this.blueTile[randomNumber1][randomNumber2] = new BlueTile(randomNumber1,randomNumber2,Color.blue);
+                blueCount--;
+            }
+            blueCount++;
+
+        }
+    }
+    private void summonWitchHouse(int randomNumber1,int randomNumber2){
+        for(int pinkCount = 9; pinkCount>0;pinkCount--){
+            randomNumber1 = ThreadLocalRandom.current().nextInt(0, 8);
+            randomNumber2 = ThreadLocalRandom.current().nextInt(0, 8);
+            if(this.gpsStart1[randomNumber1][randomNumber2] ==null&&this.blueTile[randomNumber1][randomNumber2]==null&&this.house[randomNumber1][randomNumber2]==null){
+                this.house[randomNumber1][randomNumber2] = new WitchHouseGPS(randomNumber1,randomNumber2,Color.pink);
+                pinkCount--;
+            }
+            pinkCount++;
         }
     }
 
@@ -145,7 +149,6 @@ public class GameBoard extends JFrame implements MouseListener {
                     UI.render(this, "Грешка", "Грешен ход");
 
                 } else if (p1.isMoveValid(row, col)) {
-                    moveGps(row, col, p1);
                     this.repaint();
                     if (hasBoardWitch(row, col)) {
                         UI.render(this, "Победа", "Победа");
@@ -155,7 +158,10 @@ public class GameBoard extends JFrame implements MouseListener {
                         UI.render(this, "Грешка", "Невадлен ход");
 
                     }
-
+                    else
+                        if(p1.isMoveValid(row,col)){
+                            moveGps(row,col,p1);
+                        }
                 }
             }
             else

@@ -25,7 +25,7 @@ public class GPSstart extends Tile {
 
         int rowCoeficient = Math.abs(moveRow - this.row);
         int colCoeficient = moveCol - this.col;
-        if(rowCoeficient<=1&&colCoeficient<=1&&rowCoeficient>-2&&colCoeficient>-2)
+        if(rowCoeficient<=1&&colCoeficient==0||colCoeficient<=1 && rowCoeficient==0)
             return  true;
         return false;
     }
