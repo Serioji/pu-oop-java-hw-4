@@ -148,10 +148,11 @@ public class GameBoard extends JFrame implements MouseListener {
                     moveGps(row, col, p1);
                     this.repaint();
                     if (hasBoardWitch(row, col)) {
-                        UI.render(this, "Победа", "Бъчва тайм");
-                       Restart= new JButton("Restart");
-                       add(this.);
-
+                        UI.render(this, "Победа", "Победа");
+                        System.exit(1);
+                    }
+                    if(this.hasBoardBlue(row,col))  {
+                        UI.render(this, "Грешка", "Невадлен ход");
 
                     }
 
