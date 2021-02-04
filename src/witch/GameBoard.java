@@ -2,6 +2,8 @@ package witch;
 import javax.swing.JButton;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.concurrent.ThreadLocalRandom;
@@ -38,10 +40,16 @@ public class GameBoard extends JFrame implements MouseListener {
         this.realHouse = new RealWitchHouseGPS[TILE_SIDE_COUNT][TILE_SIDE_COUNT];
         summonRealWitchHouse(randomNumber1,randomNumber2);
 
+        this.setVisible(true);
         this.setSize(800, 800);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setVisible(true);
         this.addMouseListener(this);
+    }
+
+
+    public void Res(){
+        this.setVisible(true);
+
     }
 
     @Override
@@ -177,8 +185,10 @@ public class GameBoard extends JFrame implements MouseListener {
                     if (hasRealBoardWitch(row, col)) {
                         UI.render(this, "Победа", "Победа");
                         System.exit(2);
+
                     }
                     if (hasBoardWitch(row, col)) {
+                        this.house[row][col]=null;
                         UI.render(this, "Опа", "Празна Къща опитай пак");
                     }
                     if(this.hasBoardBlue(row,col))  {
@@ -209,6 +219,7 @@ public class GameBoard extends JFrame implements MouseListener {
         this.gpsStart = null;
     }
 
+
     @Override
     public void mousePressed(MouseEvent e) {
 
@@ -228,5 +239,6 @@ public class GameBoard extends JFrame implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
 }
 
