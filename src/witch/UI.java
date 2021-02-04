@@ -35,8 +35,7 @@ public class UI extends JDialog {
         @Override
         public void actionPerformed(ActionEvent e) {
             GameBoard gameBoard = new GameBoard();
-            gameBoard.Res();
-
+            gameBoard.setVisible(true);
         }
     }
 }

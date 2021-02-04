@@ -48,8 +48,7 @@ public class GameBoard extends JFrame implements MouseListener {
 
 
     public void Res(){
-        this.setVisible(true);
-
+        dispose();
     }
 
     @Override
@@ -181,30 +180,39 @@ public class GameBoard extends JFrame implements MouseListener {
                     UI.render(this, "Грешка", "Грешен ход");
 
                 } else if (p1.isMoveValid(row, col)) {
-                    this.repaint();
                     if (hasRealBoardWitch(row, col)) {
                         UI.render(this, "Победа", "Победа");
                         System.exit(2);
 
                     }
                     if (hasBoardWitch(row, col)) {
-                        this.house[row][col]=null;
+                        this.house[row][col] = null;
                         UI.render(this, "Опа", "Празна Къща опитай пак");
                     }
-                    if(this.hasBoardBlue(row,col))  {
+                    if (this.hasBoardBlue(row, col)) {
                         UI.render(this, "Грешка", "Невадлен ход");
-                    }
-                    else
-                        if(p1.isMoveValid(row,col)){
-                            moveGps(row,col,p1);
+                    } else if (p1.isMoveValid(row, col)) {
+                        moveGps(row, col, p1);
+                        randomNumber1 = ThreadLocalRandom.current().nextInt(1, 12);
+                        if(randomNumber1 < 9){
+                            this.gpsStart1[firstRow][firstCol] = new GPSstart(firstRow,firstCol,Color.GREEN);
                         }
+                        else
+                            this.blueTile[firstRow][firstCol] = new BlueTile(firstRow,firstCol,Color.blue);
+                        this.repaint();
+
+                    }
+
                 }
-            }
-            else
+            } else {
+                firstRow=row;
+                firstCol=col;
                 if (this.hasBoardGPS(row, col))
                     this.gpsStart = this.getBoardGPS(row, col);
 
+            }
         }
+
     }
 
     private void moveGps(int row, int col, GPSstart p1) {
