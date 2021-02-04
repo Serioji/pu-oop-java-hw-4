@@ -12,6 +12,7 @@ public class GameBoard extends JFrame implements MouseListener {
     protected GPSstart[][] gpsStart1;
     protected WitchHouseGPS[][] house;
     private GPSstart gpsStart;
+    protected RealWitchHouseGPS[][] realHouse;
     int randomNumber1;
     int randomNumber2;
     int firstCol,firstRow;
@@ -34,6 +35,9 @@ public class GameBoard extends JFrame implements MouseListener {
         summonBlueTile(randomNumber1,randomNumber2);
         this.house= new WitchHouseGPS[TILE_SIDE_COUNT][TILE_SIDE_COUNT];
         summonWitchHouse(randomNumber1,randomNumber2);
+        this.realHouse = new RealWitchHouseGPS[TILE_SIDE_COUNT][TILE_SIDE_COUNT];
+        summonRealWitchHouse(randomNumber1,randomNumber2);
+
         this.setSize(800, 800);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -77,11 +81,22 @@ public class GameBoard extends JFrame implements MouseListener {
         }
     }
     private void summonWitchHouse(int randomNumber1,int randomNumber2){
-        for(int pinkCount = 9; pinkCount>0;pinkCount--){
+        for(int pinkCount = 8; pinkCount>0;pinkCount--){
             randomNumber1 = ThreadLocalRandom.current().nextInt(0, 8);
             randomNumber2 = ThreadLocalRandom.current().nextInt(0, 8);
             if(this.gpsStart1[randomNumber1][randomNumber2] ==null&&this.blueTile[randomNumber1][randomNumber2]==null&&this.house[randomNumber1][randomNumber2]==null){
                 this.house[randomNumber1][randomNumber2] = new WitchHouseGPS(randomNumber1,randomNumber2,Color.pink);
+                pinkCount--;
+            }
+            pinkCount++;
+        }
+    }
+    private void summonRealWitchHouse(int randomNumber1,int randomNumber2){
+        for (int pinkCount = 1; pinkCount>0;pinkCount--){
+            randomNumber1 = ThreadLocalRandom.current().nextInt(0, 8);
+            randomNumber2 = ThreadLocalRandom.current().nextInt(0, 8);
+            if(this.gpsStart1[randomNumber1][randomNumber2] ==null&&this.blueTile[randomNumber1][randomNumber2]==null&&this.house[randomNumber1][randomNumber2]==null){
+                this.realHouse[randomNumber1][randomNumber2]= new RealWitchHouseGPS(randomNumber1,randomNumber2,Color.pink);
                 pinkCount--;
             }
             pinkCount++;
@@ -113,6 +128,10 @@ public class GameBoard extends JFrame implements MouseListener {
             WitchHouseGPS p2 = (WitchHouseGPS) this.getBoardWitch(row,col);
             p2.render(g);
         }
+        if (this.hasRealBoardWitch(row,col)){
+            RealWitchHouseGPS p3 = (RealWitchHouseGPS) this.getRealBoardWitch(row,col);
+            p3.render(g);
+        }
     }
     private int getBoardDimensionBasedOnCoordinates(int coordinates) {
         return coordinates / GameTile.TILE_SIZE;
@@ -135,8 +154,13 @@ public class GameBoard extends JFrame implements MouseListener {
     private boolean hasBoardWitch(int row, int col) {
         return this.getBoardWitch(row, col) != null;
     }
+    private RealWitchHouseGPS getRealBoardWitch(int row, int col) {
+        return this.realHouse[row][col];
 
-
+    }
+    private boolean hasRealBoardWitch(int row, int col) {
+        return this.getRealBoardWitch(row, col) != null;
+    }
         @Override
     public void mouseClicked(MouseEvent e) {
         int row = this.getBoardDimensionBasedOnCoordinates(e.getY());
@@ -150,13 +174,15 @@ public class GameBoard extends JFrame implements MouseListener {
 
                 } else if (p1.isMoveValid(row, col)) {
                     this.repaint();
-                    if (hasBoardWitch(row, col)) {
+                    if (hasRealBoardWitch(row, col)) {
                         UI.render(this, "Победа", "Победа");
                         System.exit(2);
                     }
+                    if (hasBoardWitch(row, col)) {
+                        UI.render(this, "Опа", "Празна Къща опитай пак");
+                    }
                     if(this.hasBoardBlue(row,col))  {
                         UI.render(this, "Грешка", "Невадлен ход");
-
                     }
                     else
                         if(p1.isMoveValid(row,col)){
