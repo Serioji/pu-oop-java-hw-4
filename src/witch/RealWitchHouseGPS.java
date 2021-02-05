@@ -1,7 +1,11 @@
 package witch;
 
 import java.awt.*;
-
+/**
+ *
+ * @author Vasil
+ * @param "създаване на истинската къша на вешицата"
+ */
 public class RealWitchHouseGPS extends Tile {
     private final Color pink1 = new Color(128,0,128);
     public RealWitchHouseGPS(int row, int col , Color color) {
@@ -9,6 +13,11 @@ public class RealWitchHouseGPS extends Tile {
         this.row = row;
         this.col = col;
     }
+    /**
+     *
+     * @author Vasil
+     * @param "проектиране на истинската къща на вещтицата"
+     */
     public void render(Graphics g) {
         int x = this.col * GameTile.TILE_SIZE;
         int y = this.row * GameTile.TILE_SIZE;

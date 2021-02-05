@@ -32,7 +32,7 @@ public class GPSstart extends Tile {
     /**
      *
      * @author Vasil
-     * @param "рендериране на гарда с неговия outline като един клас"
+     * @param "рендериране на gps "
      */
     public void render(Graphics g) {
 
@@ -44,7 +44,7 @@ public class GPSstart extends Tile {
     /**
      *
      * @author Vasil
-     * @param "движение на гарда по матрицата"
+     * @param "движение на gps по дъската"
      */
     public void move(int row, int col) {
         this.row = row;

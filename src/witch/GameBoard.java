@@ -20,7 +20,11 @@ public class GameBoard extends JFrame implements MouseListener {
     int firstCol,firstRow;
     private JButton Restart;
 
-
+    /**
+     *
+     * @author Vasil
+     * @param "игралното поле със GPS в него и създаването на другите квадрати"
+     */
     public GameBoard() {
     this.gpsStart1 = new GPSstart[TILE_SIDE_COUNT][TILE_SIDE_COUNT];
     randomNumber1 = ThreadLocalRandom.current().nextInt(1, 5);
@@ -46,11 +50,19 @@ public class GameBoard extends JFrame implements MouseListener {
         this.addMouseListener(this);
     }
 
-
+    /**
+     *
+     * @author Vasil
+     * @param "опит за затваряне на предишен прозорец след натискане на бутона рестарт не се получи"
+     */
     public void Res(){
         dispose();
     }
-
+    /**
+     *
+     * @author Vasil
+     * @param "визуализирането на полето и на тила"
+     */
     @Override
     public void paint(Graphics g) {
         /**
@@ -75,6 +87,11 @@ public class GameBoard extends JFrame implements MouseListener {
             }
         }
     }
+    /**
+     *
+     * @author Vasil
+     * @param "проектиране на сините квадрати"
+     */
     private void summonBlueTile(int randomNumber1, int randomNumber2){
         for(int blueCount = 5; blueCount>0; blueCount--) {
             randomNumber1 = ThreadLocalRandom.current().nextInt(0, 8);
@@ -87,6 +104,11 @@ public class GameBoard extends JFrame implements MouseListener {
 
         }
     }
+    /**
+     *
+     * @author Vasil
+     * @param "проектиране на фалшивата къща на вещтицата"
+     */
     private void summonWitchHouse(int randomNumber1,int randomNumber2){
         for(int pinkCount = 8; pinkCount>0;pinkCount--){
             randomNumber1 = ThreadLocalRandom.current().nextInt(0, 8);
@@ -98,6 +120,11 @@ public class GameBoard extends JFrame implements MouseListener {
             pinkCount++;
         }
     }
+    /**
+     *
+     * @author Vasil
+     * @param "проектиране на истинската къща на вещтицата"
+     */
     private void summonRealWitchHouse(int randomNumber1,int randomNumber2){
         for (int pinkCount = 1; pinkCount>0;pinkCount--){
             randomNumber1 = ThreadLocalRandom.current().nextInt(0, 8);
@@ -109,17 +136,30 @@ public class GameBoard extends JFrame implements MouseListener {
             pinkCount++;
         }
     }
-
+    /**
+     *
+     * @author Vasil
+     * @param "Background"
+     */
     private Color getTileColor(int row, int col) {
 
         return Color.ORANGE;
     }
-
+    /**
+     *
+     * @author Vasil
+     * @param "проектиране на борда"
+     */
     private void renderGameTile(Graphics g, int row, int col) {
         Color tileColor = this.getTileColor(row, col);
         GameTile tile = new GameTile(row, col, tileColor);
         tile.render(g);
     }
+    /**
+     *
+     * @author Vasil
+     * @param "проектиране на тиловете"
+     */
     private void renderGamePice(Graphics g, int row, int col) {
         if (this.hasBoardGPS(row, col)) {
             GPSstart p = (GPSstart) this.getBoardGPS(row, col);
@@ -140,6 +180,11 @@ public class GameBoard extends JFrame implements MouseListener {
             p3.render(g);
         }
     }
+    /**
+     *
+     * @author Vasil
+     * @param "всички видове валидации спрямо квадратите създадени на дъската"
+     */
     private int getBoardDimensionBasedOnCoordinates(int coordinates) {
         return coordinates / GameTile.TILE_SIZE;
     }
@@ -186,7 +231,11 @@ public class GameBoard extends JFrame implements MouseListener {
         }
 
     }
-
+    /**
+     *
+     * @author Vasil
+     * @param "движението на играча със неговите особедности "
+     */
     private void GpsMove(int row , int col,int firstRow,int firstCol){
         GPSstart p1 = (GPSstart) this.gpsStart;
         if (this.hasBoardGPS(row, col)) {
@@ -220,6 +269,11 @@ public class GameBoard extends JFrame implements MouseListener {
             }
         }
     }
+    /**
+     *
+     * @author Vasil
+     * @param "метод за занулиране на предишни кординати"
+     */
     private void moveGps(int row, int col, GPSstart p1) {
         int initialRow = p1.getRow();
         int initialCol = p1.getCol();
