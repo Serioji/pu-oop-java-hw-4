@@ -175,35 +175,7 @@ public class GameBoard extends JFrame implements MouseListener {
         row--;
         if (row < 8 && col < 8) {
             if (this.gpsStart != null) {
-                GPSstart p1 = (GPSstart) this.gpsStart;
-                if (this.hasBoardGPS(row, col)) {
-                    UI.render(this, "Грешка", "Грешен ход");
-
-                } else if (p1.isMoveValid(row, col)) {
-                    if (hasRealBoardWitch(row, col)) {
-                        UI.render(this, "Победа", "Победа");
-                        System.exit(2);
-
-                    }
-                    if (hasBoardWitch(row, col)) {
-                        this.house[row][col] = null;
-                        UI.render(this, "Опа", "Празна Къща опитай пак");
-                    }
-                    if (this.hasBoardBlue(row, col)) {
-                        UI.render(this, "Грешка", "Невадлен ход");
-                    } else if (p1.isMoveValid(row, col)) {
-                        moveGps(row, col, p1);
-                        randomNumber1 = ThreadLocalRandom.current().nextInt(1, 12);
-                        if(randomNumber1 < 9){
-                            this.gpsStart1[firstRow][firstCol] = new GPSstart(firstRow,firstCol,Color.GREEN);
-                        }
-                        else
-                            this.blueTile[firstRow][firstCol] = new BlueTile(firstRow,firstCol,Color.blue);
-                        this.repaint();
-
-                    }
-
-                }
+               GpsMove(row,col,firstRow,firstCol);
             } else {
                 firstRow=row;
                 firstCol=col;
@@ -215,6 +187,39 @@ public class GameBoard extends JFrame implements MouseListener {
 
     }
 
+    private void GpsMove(int row , int col,int firstRow,int firstCol){
+        GPSstart p1 = (GPSstart) this.gpsStart;
+        if (this.hasBoardGPS(row, col)) {
+            UI.render(this, "Грешка", "Грешен ход");
+
+        } else if (p1.isMoveValid(row, col)) {
+            if (hasRealBoardWitch(row, col)) {
+                UI.render(this, "Победа", "Победа");
+                System.exit(2);
+
+            }
+            if (hasBoardWitch(row, col)) {
+                this.house[row][col] = null;
+                UI.render(this, "Опа", "Празна Къща опитай пак");
+            }
+            if (this.hasBoardBlue(row, col)) {
+                UI.render(this, "Грешка", "Невадлен ход");
+            } else if (p1.isMoveValid(row, col)) {
+                moveGps(row, col, p1);
+                randomNumber1 = ThreadLocalRandom.current().nextInt(1, 12);
+                if(randomNumber1 < 9){
+                    this.gpsStart1[firstRow][firstCol] = new GPSstart(firstRow,firstCol,Color.GREEN);
+                }
+                else
+                    this.blueTile[firstRow][firstCol] = new BlueTile(firstRow,firstCol,Color.blue);
+
+            }
+            this.repaint();
+            if(this.hasBoardBlue(row-1,col) && this.hasBoardBlue(row,col-1) && this.hasBoardBlue(row+1,col) && this.hasBoardBlue(row,col+1)){
+                UI.render(this, "Загуба", "Опитай отново");
+            }
+        }
+    }
     private void moveGps(int row, int col, GPSstart p1) {
         int initialRow = p1.getRow();
         int initialCol = p1.getCol();
